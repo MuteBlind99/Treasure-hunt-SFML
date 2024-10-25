@@ -127,7 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameHunt.cpp" />
+    <ClCompile Include="GameSFML.cpp" />
     <ClCompile Include="Treasure hunt SFML.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameHunt.h" />
+    <ClInclude Include="GameSFML.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
