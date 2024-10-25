@@ -7,8 +7,7 @@
 #include "SFML/Graphics.hpp"
 
 
-//int row_size = 4;
-//int col_size = 4;
+
 
 
 int main()
@@ -23,8 +22,10 @@ int main()
 
 	sf::Texture texture_hole;
 
-	sf::Font font;
-	sf::Text text;
+	sf::Font font_round_number;
+	sf::Font font_end_game;
+	sf::Text text_round;
+	sf::Text text_end_game;
 	sf::Sprite treasure;
 	sf::Sprite sprite_hole;
 	sf::Event event;
@@ -35,20 +36,22 @@ int main()
 	int chest = 0;
 	srand(time(NULL));
 	chest = rand() % fieldArray.size();
-	font.loadFromFile("asset\\Super Unicorn.ttf");
-	text.setFont(font);
-
+	font_round_number.loadFromFile("asset\\Super Unicorn.ttf");
+	text_round.setFont(font_round_number);
+	font_end_game.loadFromFile("asset\\mickey_mouse\\MickeyMouse_PERSONAL_USE_ONLY.otf");
+	text_end_game.setFont(font_end_game);
 
 	window.clear();
 
 
 	while (window.isOpen())
 	{
-		text.setPosition((sprite.getGlobalBounds().width * 4) + 165, 185);
-		text.setString(std::to_string(player_try));
-		text.setScale(4, 4);
-		text.setOrigin(text.getGlobalBounds().width / 2, text.getGlobalBounds().height / 2);
-		window.draw(text);
+		text_round.setPosition((sprite.getGlobalBounds().width * 4) + 185, 190);
+		text_round.setString(std::to_string(player_try));
+		text_round.setScale(3, 3);
+		text_round.setOrigin(text_round.getGlobalBounds().width, text_round.getGlobalBounds().height);
+		window.draw(text_round);
+
 		for (int row_size = 0; row_size < 4;row_size++)//Y
 		{
 			for (int col_size = 0;col_size < 4;col_size++)//X
@@ -90,8 +93,10 @@ int main()
 			}
 
 		}
+
 		static bool chest_find = false;
-		if (!chest_find && player_try>0) {
+
+		if (!chest_find && player_try > 0) {
 			while (window.pollEvent(event))
 			{
 				if (event.type == sf::Event::Closed)
@@ -120,6 +125,7 @@ int main()
 							}
 							else
 							{
+								
 								player_try--;
 								fieldArray[idx] = 1;
 							}
@@ -132,17 +138,37 @@ int main()
 		}
 		else
 		{
-			static int timer_s= 3;
+			if (chest_find)
+			{
+				text_end_game.setPosition((sprite.getGlobalBounds().width * 4) + 200, 200);
+				text_end_game.setString("WIN");
+				text_end_game.setFillColor(sf::Color::Yellow);
+				text_end_game.setScale(2, 2);
+				text_end_game.setOrigin(text_end_game.getGlobalBounds().width, text_end_game.getGlobalBounds().height);
+				window.draw(text_end_game);
+			}
+			else
+			{
+				text_end_game.setPosition((sprite.getGlobalBounds().width * 4) + 200, 200);
+				text_end_game.setString("LOSE");
+				text_end_game.setFillColor(sf::Color::Red);
+				text_end_game.setScale(2, 2);
+				text_end_game.setOrigin(text_end_game.getGlobalBounds().width, text_end_game.getGlobalBounds().height);
+				window.draw(text_end_game);
+				
+			}
+			
+			static int timer_s = 10;
 			static double  deltaTime = 1.0;
 			static auto previousTime = std::chrono::steady_clock::now();
-			auto currentTime= std::chrono::steady_clock::now();
+			auto currentTime = std::chrono::steady_clock::now();
 			std::chrono::duration<double>elapsedTime = currentTime - previousTime;
-			if (elapsedTime.count()>=deltaTime)
+			if (elapsedTime.count() >= deltaTime)
 			{
 				timer_s--;
 				previousTime = currentTime;
 			}
-			if (timer_s<=0)
+			if (timer_s <= 0)
 			{
 				exit(0);
 			}
