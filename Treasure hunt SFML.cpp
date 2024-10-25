@@ -31,8 +31,8 @@ int main()
 	sf::Event event;
 
 
-	sprite.setOrigin(1, 1);
-	int player_try = 8;
+	
+	int player_try = 4;
 	int chest = 0;
 	srand(time(NULL));
 	chest = rand() % fieldArray.size();
@@ -87,11 +87,7 @@ int main()
 					window.draw(treasure);
 					break;
 				}
-
-
-
 			}
-
 		}
 
 		static bool chest_find = false;
@@ -125,14 +121,12 @@ int main()
 							}
 							else
 							{
-								
+
 								player_try--;
 								fieldArray[idx] = 1;
 							}
 						}
-
 					}
-
 				}
 			}
 		}
@@ -140,7 +134,7 @@ int main()
 		{
 			if (chest_find)
 			{
-				text_end_game.setPosition((sprite.getGlobalBounds().width * 4) + 200, 200);
+				text_end_game.setPosition((sprite.getGlobalBounds().width * 4) + 215, 200);
 				text_end_game.setString("WIN");
 				text_end_game.setFillColor(sf::Color::Yellow);
 				text_end_game.setScale(2, 2);
@@ -155,10 +149,9 @@ int main()
 				text_end_game.setScale(2, 2);
 				text_end_game.setOrigin(text_end_game.getGlobalBounds().width, text_end_game.getGlobalBounds().height);
 				window.draw(text_end_game);
-				
 			}
-			
-			static int timer_s = 10;
+
+			static int timer_s = 4;
 			static double  deltaTime = 1.0;
 			static auto previousTime = std::chrono::steady_clock::now();
 			auto currentTime = std::chrono::steady_clock::now();
@@ -178,6 +171,5 @@ int main()
 		window.display();
 		window.clear();
 	}
-
 }
 
